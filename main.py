@@ -9,7 +9,6 @@ import os
 
 # Constants
 CURRENT_YEAR = datetime.now().year
-print(CURRENT_YEAR)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
@@ -61,11 +60,38 @@ def home():
 
 @app.route('/cafes')
 def cafes():
-    form = CafeForm()
-    return render_template('cafes.html', year=CURRENT_YEAR)
+    table_titles = ["Cafe Name", "Location", "Open", "Close", "Coffee", "WiFi", "Power"]
+    all_cafes = Cafes.query.all()
+    return render_template('cafes.html', titles=table_titles, cafes=all_cafes, year=CURRENT_YEAR)
 
 
-@app.route('/login')
+@app.route('/register')
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        # User email already exists
+        if User.query.filter_by(email=form.email.data).first():
+            flash("You've already signed up with that email, please log in instead.")
+            return redirect(url_for('login'))
+
+        hashed_password = generate_password_hash(
+            form.password.data,
+            method="pbkdf2:sha256",
+            salt_length=8
+        )
+        new_user = User(
+            email=form.email.data,
+            password=hashed_password,
+            name=form.name.data
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        login_user(new_user)
+        return redirect(url_for("cafes"))
+    return render_template('register.html', form=form, year=CURRENT_YEAR)
+
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -82,14 +108,14 @@ def login():
         # Email exists and password correct
         else:
             login_user(user)
-            return redirect(url_for('get_all_posts'))
+            return redirect(url_for('cafes'))
     return render_template("login.html", form=form, current_user=current_user, year=CURRENT_YEAR)
 
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('get_all_posts'))
+    return redirect(url_for('home'))
 
 
 @app.route('/add')

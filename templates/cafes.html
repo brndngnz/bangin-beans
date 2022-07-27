@@ -4,13 +4,58 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8">
-                        <h2 class="text-white mb-4">You've found the right place!</h2>
+                        <h1 class="text-white mb-4">You've found the right place!</h1>
                         <p class="text-white-50">
                             Checkout my collection of cafes with data on power socket availability, Wi-Fi speed and coffee quality.
                         </p>
                     </div>
                 </div>
-                <img class="img-fluid" src="{{url_for('static', filename='img/coffee-cup.png') }}" alt="..." />
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <h1 class="text-white">All Cafes</h1>
+                      <table class="table table-dark">
+                          <thead>
+                            <tr>
+                              {% for title in titles %}
+                                <th scope="col">
+                                    {{ title }}
+                                </th>
+                              {% endfor %}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for row in cafes %}
+                            <tr>
+                                <td>
+                                    {{ row.cafe }}
+                                </td>
+                                <td>
+                                    <a href="{{ row.location }}">Maps Link</a>
+                                </td>
+                                <td>
+                                    {{ row.open_time }}
+                                </td>
+                                <td>
+                                    {{ row.close_time }}
+                                </td>
+                                <td>
+                                    {{ row.rating }}
+                                </td>
+                                <td>
+                                    {{ row.wifi }}
+                                </td>
+                                <td>
+                                    {{ row.power }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                      </table>
+                      <p class="text-white-50"><a href="{{ url_for('login') }}">Login</a> or <a href="{{ url_for('register') }}">Register</a> to start contributing today!</p>
+                    </div>
+                  </div>
+                </div>
             </div>
         </section>
 
