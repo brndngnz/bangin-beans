@@ -55,14 +55,14 @@ class Cafes(db.Model):
 
 @app.route('/')
 def home():
-    return render_template('index.html', year=CURRENT_YEAR)
+    return render_template('index.html', current_user=current_user, year=CURRENT_YEAR)
 
 
 @app.route('/cafes')
 def cafes():
     table_titles = ["Cafe Name", "Location", "Open", "Close", "Coffee", "WiFi", "Power"]
     all_cafes = Cafes.query.all()
-    return render_template('cafes.html', titles=table_titles, cafes=all_cafes, year=CURRENT_YEAR)
+    return render_template('cafes.html', titles=table_titles, cafes=all_cafes, current_user=current_user, year=CURRENT_YEAR)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -88,7 +88,7 @@ def register():
         db.session.commit()
         login_user(new_user)
         return redirect(url_for("cafes"))
-    return render_template('register.html', form=form, year=CURRENT_YEAR)
+    return render_template('register.html', form=form, current_user=current_user, year=CURRENT_YEAR)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -118,9 +118,24 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/add')
+@app.route('/add', methods=['GET', 'POST'])
+@login_required
 def add_cafe():
-    pass
+    form = CafeForm()
+    if form.validate_on_submit():
+        new_cafe = Cafes(
+            cafe=form.cafe.data,
+            location=form.location.data,
+            open_time=form.open_time.data,
+            close_time=form.close_time.data,
+            rating=form.rating.data,
+            wifi=form.wifi.data,
+            power=form.power.data,
+        )
+        db.session.add(new_cafe)
+        db.session.commit()
+        return redirect(url_for('cafes'))
+    return render_template("add.html", form=form, current_user=current_user, year=CURRENT_YEAR)
 
 
 if __name__ == '__main__':
