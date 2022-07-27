@@ -50,7 +50,7 @@ class Cafes(db.Model):
     power = db.Column(db.String(20))
 
 
-# db.create_all()
+db.create_all()
 
 
 @app.route('/')
