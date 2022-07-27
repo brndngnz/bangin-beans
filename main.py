@@ -65,7 +65,7 @@ def cafes():
     return render_template('cafes.html', titles=table_titles, cafes=all_cafes, year=CURRENT_YEAR)
 
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
