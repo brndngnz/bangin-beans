@@ -4,7 +4,6 @@
 {% include "header.html" %}
 
   <!-- Page Header -->
-<!-- Masthead-->
         <header class="login">
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
                 <div class="d-flex justify-content-center">
@@ -19,7 +18,7 @@
                                 {% with messages = get_flashed_messages() %}
                                     {% if messages %}
                                       {% for message in messages %}
-                                        <p>{{ message }}</p>
+                                        <p class="text-warning">{{ message }}</p>
                                       {% endfor %}
                                     {% endif %}
                                 {% endwith %}
