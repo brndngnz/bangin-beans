@@ -1,0 +1,17 @@
+{% include "header.html" %}
+<!-- About-->
+        <section class="about-section text-center" id="about">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="text-white mb-4">You've found the right place!</h2>
+                        <p class="text-white-50">
+                            Checkout my collection of cafes with data on power socket availability, Wi-Fi speed and coffee quality.
+                        </p>
+                    </div>
+                </div>
+                <img class="img-fluid" src="{{url_for('static', filename='img/coffee-cup.png') }}" alt="..." />
+            </div>
+        </section>
+
+{% include "footer.html" %}
