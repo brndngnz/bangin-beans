@@ -55,7 +55,7 @@
                         {% if not current_user.is_authenticated %}
                       <p class="text-white-50"><a href="{{ url_for('login') }}">Login</a> or <a href="{{ url_for('register') }}">Register</a> to start contributing today!</p>
                         {% else %}
-                        <a class="btn btn-primary" href="{{ url_for('cafes') }}">Contribute</a>
+                        <a class="btn btn-primary" href="{{ url_for('add_cafe') }}">Contribute</a>
                         {% endif %}
                     </div>
                   </div>

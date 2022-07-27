@@ -43,11 +43,11 @@ class Cafes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     cafe = db.Column(db.String(100))
     location = db.Column(db.String(250))
-    open_time = db.Column(db.String(8))
-    close_time = db.Column(db.String(8))
-    rating = db.Column(db.String(5))
-    wifi = db.Column(db.String(5))
-    power = db.Column(db.String(5))
+    open_time = db.Column(db.String(20))
+    close_time = db.Column(db.String(20))
+    rating = db.Column(db.String(20))
+    wifi = db.Column(db.String(20))
+    power = db.Column(db.String(20))
 
 
 # db.create_all()
@@ -108,7 +108,7 @@ def login():
         # Email exists and password correct
         else:
             login_user(user)
-            return redirect(url_for('cafes'))
+            return redirect(url_for("cafes"))
     return render_template("login.html", form=form, current_user=current_user, year=CURRENT_YEAR)
 
 
@@ -134,7 +134,7 @@ def add_cafe():
         )
         db.session.add(new_cafe)
         db.session.commit()
-        return redirect(url_for('cafes'))
+        return redirect(url_for("cafes"))
     return render_template("add.html", form=form, current_user=current_user, year=CURRENT_YEAR)
 
 

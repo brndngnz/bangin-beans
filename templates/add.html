@@ -1,10 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% import "bootstrap/wtf.html" as wtf %}
 
-</body>
-</html>
+{% include "header.html" %}
+
+<header class="new-cafe">
+            <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+                <div class="d-flex justify-content-center">
+                    <div class="text-center">
+                        <h1 class="mx-auto my-0 text-uppercase">Add A New Cafe</h1>
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">Let's work together. Fill out this form to add new cafes to our site.</h2>
+
+                        <div class="container">
+                          <div class="row">
+                            <div class="text-white-50 col-lg-6 col-md-10 mx-auto">
+                              {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+                            </div>
+                          </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+
+{% include "footer.html" %}
